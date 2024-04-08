@@ -7,19 +7,10 @@ using namespace std;
 
 
 struct DataNode {
-    long unsigned int ID;
+    unsigned long int ID;
     int severity;  // 1 to 4, where 1 is low and 4 is high
-    string startTime;
-    string endTime;
     float distance;  // Length of road affected by accident in miles
-    string streetName;
-    string city;
-    string county;
-    string state;
-    string zipcode;
-    string timezone;
-    string weatherCondition;
-    string relativeTime;  // Day or night
+    string startTime, endTime, streetName, city, county, state, zipcode, timezone, weatherCondition, dayNight;
 };
 
 
@@ -52,42 +43,18 @@ int main() {
                 dataPoint = dataPoint.substr(2, dataPoint.size()-2);
                 dataObject.ID = stoi(dataPoint);
             }
-            else if (indexCount == 3) {
-                dataObject.severity = stoi(dataPoint);
-            }
-            else if (indexCount == 4) {
-                dataObject.startTime = dataPoint;
-            }
-            else if (indexCount == 5) {
-                dataObject.endTime = dataPoint;
-            }
-            else if (indexCount == 10) {
-                dataObject.distance = stof(dataPoint);
-            }
-            else if (indexCount == 12) {
-                dataObject.streetName = dataPoint;
-            }
-            else if (indexCount == 13) {
-                dataObject.city = dataPoint;
-            }
-            else if (indexCount == 14) {
-                dataObject.county = dataPoint;
-            }
-            else if (indexCount == 15) {
-                dataObject.state = dataPoint;
-            }
-            else if (indexCount == 16) {
-                dataObject.zipcode = dataPoint;
-            }
-            else if (indexCount == 18) {
-                dataObject.timezone = dataPoint;
-            }
-            else if (indexCount == 29) {
-                dataObject.weatherCondition = dataPoint;
-            }
-            else if (indexCount == 43) {
-                dataObject.relativeTime = dataPoint;
-            }
+            else if (indexCount == 3) {dataObject.severity = stoi(dataPoint);}
+            else if (indexCount == 4) {dataObject.startTime = dataPoint;}
+            else if (indexCount == 5) {dataObject.endTime = dataPoint;}
+            else if (indexCount == 10) {dataObject.distance = stof(dataPoint);}
+            else if (indexCount == 12) {dataObject.streetName = dataPoint;}
+            else if (indexCount == 13) {dataObject.city = dataPoint;}
+            else if (indexCount == 14) {dataObject.county = dataPoint;}
+            else if (indexCount == 15) {dataObject.state = dataPoint;}
+            else if (indexCount == 16) {dataObject.zipcode = dataPoint;}
+            else if (indexCount == 18) {dataObject.timezone = dataPoint;}
+            else if (indexCount == 29) {dataObject.weatherCondition = dataPoint;}
+            else if (indexCount == 43) {dataObject.dayNight = dataPoint;}
 
             indexCount++;
         }
