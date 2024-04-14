@@ -2,16 +2,9 @@
 #include <fstream>
 #include <sstream>
 #include <filesystem>
+#include "DataNode.h"
 
 using namespace std;
-
-
-struct DataNode {
-    unsigned long int ID;
-    int severity;  // 1 to 4, where 1 is low and 4 is high
-    float distance;  // Length of road affected by accident in miles
-    string startTime, endTime, streetName, city, county, state, zipcode, timezone, weatherCondition, dayNight;
-};
 
 
 int main() {
