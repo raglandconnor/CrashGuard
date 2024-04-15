@@ -60,6 +60,9 @@ void HashMap<T>::insert(T key, DataNode dataObject) {
         if (hashMap[hashKey][i].first == key) {
             hashMap[hashKey][i].second.numCrashes++;
             hashMap[hashKey][i].second.totalSeverity += dataObject.severity;
+            int numCrashes = hashMap[hashKey][i].second.numCrashes;
+            int totalSeverity = hashMap[hashKey][i].second.totalSeverity;
+            hashMap[hashKey][i].second.averageSeverity = (float)totalSeverity / (float)numCrashes;
 
             return;
         }
@@ -69,6 +72,7 @@ void HashMap<T>::insert(T key, DataNode dataObject) {
     AttributeObject attributeObject;
     attributeObject.numCrashes = 1;
     attributeObject.totalSeverity = dataObject.severity;
+    attributeObject.averageSeverity = dataObject.severity;
     pair<T, AttributeObject> pair = make_pair(key, attributeObject);
 
     hashMap[hashKey].push_back(pair);
@@ -77,7 +81,17 @@ void HashMap<T>::insert(T key, DataNode dataObject) {
 
 template<typename T>
 void HashMap<T>::find(T key) {
+    int hashKey = hash(key);
 
+    for (int i = 0; i < hashMap[hashKey].size(); i++) {
+        if (hashMap[hashKey][i].first == key) {
+            AttributeObject attribute = hashMap[hashKey][i].second;
+            cout << key << ':' << endl;
+            cout << attribute.numCrashes << " total crashes" << endl;
+            cout << attribute.averageSeverity << "average severity" << endl;
+            cout << endl;
+        }
+    }
 }
 
 

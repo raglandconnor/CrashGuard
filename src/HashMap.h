@@ -19,6 +19,7 @@ private:
     struct AttributeObject {  // Stores values pertaining to a specific attribute
         int numCrashes;
         int totalSeverity;  // For average severity: totalSeverity / numCrashes
+        float averageSeverity;
     };
 
     const float MAX_LOAD_FACTOR = 0.75;
