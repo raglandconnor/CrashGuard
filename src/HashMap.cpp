@@ -49,11 +49,12 @@ HashMap<T>::HashMap() {
     hashMap.resize(INITIAL_CAPACITY);
     _maxCapacity = INITIAL_CAPACITY;
     _currentCapacity = 0;
+    _loadFactor = 0;
 }
 
 
 template<typename T>
-void HashMap<T>::insert(T key, DataNode dataObject) {
+void HashMap<T>::insert(T key, const DataNode& dataObject) {
     int hashKey = hash(key);
 
     for (int i = 0; i < hashMap[hashKey].size(); i++) {
@@ -69,10 +70,10 @@ void HashMap<T>::insert(T key, DataNode dataObject) {
     }
 
     // Existing object not found
-    AttributeData attributeObject;
+    AttributeData attributeObject{};
     attributeObject.numCrashes = 1;
     attributeObject.totalSeverity = dataObject.severity;
-    attributeObject.averageSeverity = dataObject.severity;
+    attributeObject.averageSeverity = (float)dataObject.severity;
     pair<T, AttributeData> pair = make_pair(key, attributeObject);
 
     hashMap[hashKey].push_back(pair);
@@ -100,12 +101,38 @@ void HashMap<T>::find(T key) {
 
 
 template<typename T>
-vector<pair<T, int>> HashMap<T>::getTopK(int k) {
+vector<pair<T, AttributeData>> HashMap<T>::getTopK(int k) {
+    vector<pair<T, AttributeData>> dataVector;
+    for (auto bucket : hashMap) {
+        dataVector.insert(dataVector.end(), bucket.begin(), bucket.end());
+    }
 
+    // Sort using std::sort and a lambda function for comparing.
+    // Reference: https://stackoverflow.com/questions/5122804/how-to-sort-with-a-lambda
+    sort(dataVector.begin(), dataVector.end(), [](const pair<T, AttributeData> &a, const pair<T, AttributeData> &b) {
+        return a.second.numCrashes > b.second.numCrashes;
+    });
+
+    dataVector.resize(k);  // Only keep top k elements.
+
+    return dataVector;
 }
 
 
 template<typename T>
-vector<pair<T, int>> HashMap<T>::getBottomK(int k) {
+vector<pair<T, AttributeData>> HashMap<T>::getBottomK(int k) {
+    vector<pair<T, AttributeData>> dataVector;
+    for (auto bucket : hashMap) {
+        dataVector.insert(dataVector.end(), bucket.begin(), bucket.end());
+    }
 
+    // Sort using std::sort and a lambda function for comparing.
+    // Reference: https://stackoverflow.com/questions/5122804/how-to-sort-with-a-lambda
+    sort(dataVector.begin(), dataVector.end(), [](const pair<T, AttributeData> &a, const pair<T, AttributeData> &b) {
+        return a.second.numCrashes < b.second.numCrashes;
+    });
+
+    dataVector.resize(k);  // Only keep top k elements.
+
+    return dataVector;
 }

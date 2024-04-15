@@ -13,7 +13,6 @@
 using namespace std;
 
 
-
 template <typename T>
 class HashMap {
 private:
@@ -32,11 +31,11 @@ private:
 public:
     HashMap();
 
-    void insert(T key, DataNode dataObject);
+    void insert(T key, const DataNode& dataObject);
     void find(T key);  // May change to accommodate specific uses
 
-    vector<pair<T, int>> getTopK(int k);  // Gets top k values
-    vector<pair<T, int>> getBottomK(int k);  // Gets k lowest values
+    vector<pair<T, AttributeData>> getTopK(int k);  // Gets top k values
+    vector<pair<T, AttributeData>> getBottomK(int k);  // Gets k lowest values
 };
 
 
