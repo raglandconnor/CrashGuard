@@ -5,6 +5,8 @@
 #ifndef PROJECT3_CRASHGUARD_ATTRIBUTEDATA_H
 #define PROJECT3_CRASHGUARD_ATTRIBUTEDATA_H
 
+#include <iostream>
+
 /*
  * Stores values pertaining to a specific attribute
  * Ex:
@@ -13,6 +15,7 @@
 */
 
 struct AttributeData {
+    std::string attributeName;
     int numCrashes;
     long int totalSeverity;  // For average severity: totalSeverity / numCrashes
     double averageSeverity;
