@@ -23,7 +23,7 @@ private:
     int _maxCapacity;
     int _currentCapacity;
 
-    vector<vector<pair<T, AttributeData>>> hashMap;  // Stores <key, DataNode>
+    vector<vector<pair<T, AttributeData>>> hashMap;  // Stores <key, AttributeData>
 
     int hash(T key);  // Returns reduced hash key
     void updateLoadFactor();  // Re-hashes the hash map

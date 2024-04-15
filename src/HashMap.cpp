@@ -39,6 +39,7 @@ void HashMap<T>::updateLoadFactor() {
         hashMap.clear();
         hashMap.resize(_maxCapacity);
         hashMap = move(newHashMap);  // std::move to avoid copies
+        // Reference: https://stackoverflow.com/questions/3413470/what-is-stdmove-and-when-should-it-be-used
     }
 }
 
@@ -57,6 +58,7 @@ template<typename T>
 void HashMap<T>::insert(T key, const DataNode& dataObject) {
     int hashKey = hash(key);
 
+    // If the key is already present in the hash map
     for (int i = 0; i < hashMap[hashKey].size(); i++) {
         if (hashMap[hashKey][i].first == key) {
             hashMap[hashKey][i].second.numCrashes++;
@@ -88,6 +90,7 @@ template<typename T>
 void HashMap<T>::find(T key) {
     int hashKey = hash(key);
 
+    // Iterate through all until found, then print
     for (int i = 0; i < hashMap[hashKey].size(); i++) {
         if (hashMap[hashKey][i].first == key) {
             AttributeData attribute = hashMap[hashKey][i].second;
