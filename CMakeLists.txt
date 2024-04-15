@@ -8,4 +8,5 @@ add_executable(Project3_CrashGuard src/main.cpp
         src/HashMap.cpp
         src/DataNode.h
         src/Heap.cpp
-        src/Heap.h)
+        src/Heap.h
+        src/AttributeData.h)
