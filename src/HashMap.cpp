@@ -7,7 +7,9 @@
 
 template<typename T>
 int HashMap<T>::hash(T key) {
+    std::hash<T> hash;
 
+    return hash(key) % _maxCapacity;  // Reduce and return
 }
 
 

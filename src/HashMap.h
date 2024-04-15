@@ -24,7 +24,7 @@ private:
 
     vector<vector<pair<T, DataNode>>> hashMap;  // Stores <key, DataNode>
 
-    int hash(T key);  // Returns hash key
+    int hash(T key);  // Returns reduced hash key
     void updateLoadFactor();  // Re-hashes the hash map
 
 public:
