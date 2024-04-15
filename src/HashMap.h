@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include "DataNode.h"
+#include "AttributeData.h"
 
 using namespace std;
 
@@ -16,12 +17,6 @@ using namespace std;
 template <typename T>
 class HashMap {
 private:
-    struct Attribute {  // Stores values pertaining to a specific attribute
-        int numCrashes;
-        int totalSeverity;  // For average severity: totalSeverity / numCrashes
-        float averageSeverity;
-    };
-
     const float MAX_LOAD_FACTOR = 0.75;
     const int INITIAL_CAPACITY = 256;
 
@@ -29,7 +24,7 @@ private:
     int _maxCapacity;
     int _currentCapacity;
 
-    vector<vector<pair<T, Attribute>>> hashMap;  // Stores <key, DataNode>
+    vector<vector<pair<T, AttributeData>>> hashMap;  // Stores <key, DataNode>
 
     int hash(T key);  // Returns reduced hash key
     void updateLoadFactor();  // Re-hashes the hash map

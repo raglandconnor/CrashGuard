@@ -22,7 +22,7 @@ void HashMap<T>::updateLoadFactor() {
         int tempCapacity = _maxCapacity;  // Store old capacity
         _maxCapacity *= 2;
 
-        vector<vector<pair<T, Attribute>>> newHashMap;
+        vector<vector<pair<T, AttributeData>>> newHashMap;
         newHashMap.resize(_maxCapacity);
 
         for (int i = 0; i < tempCapacity; i++) {
@@ -69,11 +69,11 @@ void HashMap<T>::insert(T key, DataNode dataObject) {
     }
 
     // Existing object not found
-    Attribute attributeObject;
+    AttributeData attributeObject;
     attributeObject.numCrashes = 1;
     attributeObject.totalSeverity = dataObject.severity;
     attributeObject.averageSeverity = dataObject.severity;
-    pair<T, Attribute> pair = make_pair(key, attributeObject);
+    pair<T, AttributeData> pair = make_pair(key, attributeObject);
 
     hashMap[hashKey].push_back(pair);
 }
@@ -85,7 +85,7 @@ void HashMap<T>::find(T key) {
 
     for (int i = 0; i < hashMap[hashKey].size(); i++) {
         if (hashMap[hashKey][i].first == key) {
-            Attribute attribute = hashMap[hashKey][i].second;
+            AttributeData attribute = hashMap[hashKey][i].second;
             cout << key << ':' << endl;
             cout << attribute.numCrashes << " total crashes" << endl;
             cout << attribute.averageSeverity << "average severity" << endl;
