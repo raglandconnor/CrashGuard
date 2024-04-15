@@ -13,9 +13,8 @@ using namespace std;
 class Heap {
     private:
         vector<DataNode> heap;
-        int _size;
-        void heapifyUp();
-        void heapifyDown();
+        void heapifyUp(int index);
+        void heapifyDown(int index);
     public:
         Heap();
         bool empty();
@@ -23,6 +22,7 @@ class Heap {
         DataNode top();
             // i.e, print data.numCrashes;
             // data.whateverElse
+        void push(DataNode data);
         void pop();
 };
 
