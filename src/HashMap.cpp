@@ -18,7 +18,7 @@ void HashMap<T>::updateLoadFactor() {
     _loadFactor = (float)_currentCapacity / (float)_maxCapacity;
 
     // Re-hash
-    if (_loadFactor > _maxCapacity) {
+    if (_loadFactor > MAX_LOAD_FACTOR) {
         int tempCapacity = _maxCapacity;  // Store old capacity
         _maxCapacity *= 2;
 
@@ -76,6 +76,10 @@ void HashMap<T>::insert(T key, DataNode dataObject) {
     pair<T, AttributeData> pair = make_pair(key, attributeObject);
 
     hashMap[hashKey].push_back(pair);
+
+    // Update the load factor only if a new object is being added
+    _currentCapacity++;
+    updateLoadFactor();
 }
 
 
