@@ -12,9 +12,15 @@
 using namespace std;
 
 
+
 template <typename T>
 class HashMap {
 private:
+    struct AttributeObject {  // Stores values pertaining to a specific attribute
+        int numCrashes;
+        int totalSeverity;  // For average severity: totalSeverity / numCrashes
+    };
+
     const float MAX_LOAD_FACTOR = 0.75;
     const int INITIAL_CAPACITY = 256;
 
@@ -22,7 +28,7 @@ private:
     int _maxCapacity;
     int _currentCapacity;
 
-    vector<vector<pair<T, DataNode>>> hashMap;  // Stores <key, DataNode>
+    vector<vector<pair<T, AttributeObject>>> hashMap;  // Stores <key, DataNode>
 
     int hash(T key);  // Returns reduced hash key
     void updateLoadFactor();  // Re-hashes the hash map
@@ -33,8 +39,8 @@ public:
     void insert(T key, DataNode dataObject);
     void find(T key);  // May change to accommodate specific uses
 
-    vector<pair<T, DataNode>> getTopK(int k);  // Gets top k values
-    vector<pair<T, DataNode>> getBottomK(int k);  // Gets k lowest values
+    vector<pair<T, int>> getTopK(int k);  // Gets top k values
+    vector<pair<T, int>> getBottomK(int k);  // Gets k lowest values
 };
 
 

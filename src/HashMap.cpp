@@ -22,7 +22,7 @@ void HashMap<T>::updateLoadFactor() {
         int tempCapacity = _maxCapacity;  // Store old capacity
         _maxCapacity *= 2;
 
-        vector<vector<pair<T, DataNode>>> newHashMap;
+        vector<vector<pair<T, AttributeObject>>> newHashMap;
         newHashMap.resize(_maxCapacity);
 
         for (int i = 0; i < tempCapacity; i++) {
@@ -54,7 +54,24 @@ HashMap<T>::HashMap() {
 
 template<typename T>
 void HashMap<T>::insert(T key, DataNode dataObject) {
+    int hashKey = hash(key);
 
+    for (int i = 0; i < hashMap[hashKey].size(); i++) {
+        if (hashMap[hashKey][i].first == key) {
+            hashMap[hashKey][i].second.numCrashes++;
+            hashMap[hashKey][i].second.totalSeverity += dataObject.severity;
+
+            return;
+        }
+    }
+
+    // Existing object not found
+    AttributeObject attributeObject;
+    attributeObject.numCrashes = 1;
+    attributeObject.totalSeverity = dataObject.severity;
+    pair<T, AttributeObject> pair = make_pair(key, attributeObject);
+
+    hashMap[hashKey].push_back(pair);
 }
 
 
@@ -65,12 +82,12 @@ void HashMap<T>::find(T key) {
 
 
 template<typename T>
-vector<pair<T, DataNode>> HashMap<T>::getTopK(int k) {
+vector<pair<T, int>> HashMap<T>::getTopK(int k) {
 
 }
 
 
 template<typename T>
-vector<pair<T, DataNode>> HashMap<T>::getBottomK(int k) {
+vector<pair<T, int>> HashMap<T>::getBottomK(int k) {
 
 }
