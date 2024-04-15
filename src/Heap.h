@@ -6,23 +6,24 @@
 #define PROJECT3_CRASHGUARD_HEAP_H
 #include <vector>
 #include "DataNode.h"
+#include "AttributeData.h"
 using namespace std;
 
 
 
 class Heap {
     private:
-        vector<DataNode> heap;
+        vector<AttributeData> heap;
         void heapifyUp(int index);
         void heapifyDown(int index);
     public:
         Heap();
         bool empty();
         int size();
-        DataNode top();
+        AttributeData top();
             // i.e, print data.numCrashes;
             // data.whateverElse
-        void push(DataNode data);
+        void push(AttributeData data);
         void pop();
 };
 
