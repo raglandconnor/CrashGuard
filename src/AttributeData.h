@@ -14,8 +14,8 @@
 
 struct AttributeData {
     int numCrashes;
-    int totalSeverity;  // For average severity: totalSeverity / numCrashes
-    float averageSeverity;
+    long int totalSeverity;  // For average severity: totalSeverity / numCrashes
+    double averageSeverity;
 };
 
 #endif //PROJECT3_CRASHGUARD_ATTRIBUTEDATA_H
