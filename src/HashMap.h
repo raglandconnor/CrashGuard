@@ -16,7 +16,7 @@ using namespace std;
 template <typename T>
 class HashMap {
 private:
-    struct AttributeObject {  // Stores values pertaining to a specific attribute
+    struct Attribute {  // Stores values pertaining to a specific attribute
         int numCrashes;
         int totalSeverity;  // For average severity: totalSeverity / numCrashes
         float averageSeverity;
@@ -29,7 +29,7 @@ private:
     int _maxCapacity;
     int _currentCapacity;
 
-    vector<vector<pair<T, AttributeObject>>> hashMap;  // Stores <key, DataNode>
+    vector<vector<pair<T, Attribute>>> hashMap;  // Stores <key, DataNode>
 
     int hash(T key);  // Returns reduced hash key
     void updateLoadFactor();  // Re-hashes the hash map
