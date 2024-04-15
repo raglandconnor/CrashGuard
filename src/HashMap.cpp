@@ -14,6 +14,8 @@ int HashMap<T>::hash(T key) {
 template<typename T>
 void HashMap<T>::updateLoadFactor() {
     _loadFactor = (float)_currentCapacity / (float)_maxCapacity;
+
+    // Re-hash
     if (_loadFactor > _maxCapacity) {
         int tempCapacity = _maxCapacity;  // Store old capacity
         _maxCapacity *= 2;
@@ -28,6 +30,9 @@ void HashMap<T>::updateLoadFactor() {
                 newHashMap[idx].push_back(pair);
             }
         }
+
+        // Update load factor
+        _loadFactor = (float)_currentCapacity / (float)_maxCapacity;
 
         hashMap.clear();
         hashMap.resize(_maxCapacity);
