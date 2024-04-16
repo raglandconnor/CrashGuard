@@ -6,8 +6,10 @@
 
 int HashMap::hash(const string& key) {
     std::hash<string> hash;
+    size_t hashValue = hash(key);
+    size_t reducedHashValue = hashValue % _maxCapacity;
 
-    return (int)hash(key) % _maxCapacity;  // Reduce and return
+    return (int)reducedHashValue;  // Reduce and return
 }
 
 
@@ -53,21 +55,23 @@ HashMap::HashMap() {
 void HashMap::insert(string key, const DataNode& dataObject) {
     int hashKey = hash(key);
 
-    // If the key is already present in the hash map
-    for (int i = 0; i < hashMap[hashKey].size(); i++) {
-        if (hashMap[hashKey][i].first == key) {
-            hashMap[hashKey][i].second.numCrashes++;
-            hashMap[hashKey][i].second.totalSeverity += dataObject.severity;
-            int numCrashes = hashMap[hashKey][i].second.numCrashes;
-            int totalSeverity = hashMap[hashKey][i].second.totalSeverity;
-            hashMap[hashKey][i].second.averageSeverity = (float)totalSeverity / (float)numCrashes;
+    if (!hashMap[hashKey].empty()) {
+        // If the key is already present in the hash map
+        for (auto &item : hashMap[hashKey]) {
+            if (item.first == key) {
+                item.second.numCrashes += 1;
+                item.second.totalSeverity += dataObject.severity;
+                int numCrashes = item.second.numCrashes;
+                int totalSeverity = item.second.totalSeverity;
+                item.second.averageSeverity = (double)totalSeverity / (double)numCrashes;
 
-            return;
+                return;
+            }
         }
     }
 
     // Existing object not found
-    AttributeData attributeObject{};
+    AttributeData attributeObject;
     attributeObject.attributeName = key;
     attributeObject.numCrashes = 1;
     attributeObject.totalSeverity = dataObject.severity;
@@ -91,16 +95,20 @@ void HashMap::find(string key) {
             AttributeData attribute = hashMap[hashKey][i].second;
             cout << key << ':' << endl;
             cout << attribute.numCrashes << " total crashes" << endl;
-            cout << attribute.averageSeverity << "average severity" << endl;
+            cout << attribute.averageSeverity << " average severity" << endl;
             cout << endl;
+
+            return;
         }
     }
+
+    cout << "Not found" << endl;
 }
 
 
 vector<pair<string, AttributeData>> HashMap::getTopK(int k) {
     vector<pair<string, AttributeData>> dataVector;
-    for (auto bucket : hashMap) {
+    for (auto &bucket : hashMap) {
         dataVector.insert(dataVector.end(), bucket.begin(), bucket.end());
     }
 
@@ -110,7 +118,9 @@ vector<pair<string, AttributeData>> HashMap::getTopK(int k) {
         return a.second.numCrashes > b.second.numCrashes;
     });
 
-    dataVector.resize(k);  // Only keep top k elements.
+    if (dataVector.size() > k) {
+        dataVector.resize(k);  // Only keep top k elements.
+    }
 
     return dataVector;
 }
@@ -118,7 +128,7 @@ vector<pair<string, AttributeData>> HashMap::getTopK(int k) {
 
 vector<pair<string, AttributeData>> HashMap::getBottomK(int k) {
     vector<pair<string, AttributeData>> dataVector;
-    for (auto bucket : hashMap) {
+    for (auto &bucket : hashMap) {
         dataVector.insert(dataVector.end(), bucket.begin(), bucket.end());
     }
 
@@ -128,7 +138,23 @@ vector<pair<string, AttributeData>> HashMap::getBottomK(int k) {
         return a.second.numCrashes < b.second.numCrashes;
     });
 
-    dataVector.resize(k);  // Only keep top k elements.
+    if (dataVector.size() > k) {
+        dataVector.resize(k);  // Only keep top k elements.
+    }
 
     return dataVector;
+}
+
+// Debugging functions
+// -------------------
+
+void HashMap::printAll() {
+    for (auto row : hashMap) {
+        for (auto col : row) {
+            cout << col.first << ": " << endl;
+            cout << "Num crashes: " << col.second.numCrashes << endl;
+            cout << "Average severity: " << col.second.averageSeverity << endl;
+            cout << endl;
+        }
+    }
 }

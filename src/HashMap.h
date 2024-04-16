@@ -36,6 +36,9 @@ public:
 
     vector<pair<string, AttributeData>> getTopK(int k);  // Gets top k values
     vector<pair<string, AttributeData>> getBottomK(int k);  // Gets k lowest values
+
+    // For debugging:
+    void printAll();
 };
 
 
