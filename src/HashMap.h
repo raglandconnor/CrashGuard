@@ -9,6 +9,7 @@
 #include <vector>
 #include "DataNode.h"
 #include "AttributeData.h"
+#include <algorithm>
 
 using namespace std;
 
