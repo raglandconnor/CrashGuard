@@ -7,13 +7,15 @@
 #include <vector>
 #include "DataNode.h"
 #include "AttributeData.h"
+#include <functional>
 using namespace std;
 
 
-
+template<typename Compare>
 class Heap {
     private:
         vector<AttributeData> heap;
+        Compare comparator;
         void heapifyUp(int index);
         void heapifyDown(int index);
     public:

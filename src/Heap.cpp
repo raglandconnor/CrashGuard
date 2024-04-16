@@ -4,11 +4,13 @@
 
 #include "Heap.h"
 
-void Heap::heapifyUp(int index){
+template<typename Compare>
+void Heap<Compare>::heapifyUp(int index){
     
 }
 
-void Heap::heapifyDown(int index){
+template<typename Compare>
+void Heap<Compare>::heapifyDown(int index){
 
     //the current parent index to compare with the children 
 	int largestOrSmallest = index;
@@ -20,13 +22,14 @@ void Heap::heapifyDown(int index){
 
 
 	//check if index is valid, if it is, check if more crashes occur at the child or parent
-	if(child1Index < heap.size() && heap[child1Index].numCrashes > heap[largestOrSmallest].numCrashes){
+    //user can use comparator to choose min or max heap.
+	if(child1Index < heap.size() && comparator(heap[largestOrSmallest].numCrashes, heap[child1Index].numCrashes)){
         largestOrSmallest = child1Index;
     }
 
     //check if index is valid, if it is, check if more crashes occur at the child or parent
     //can also overwrite the previous if statement
-    if(child2Index < heap.size() && heap[child2Index].numCrashes > heap[largestOrSmallest].numCrashes){
+    if(child2Index < heap.size() && comparator(heap[largestOrSmallest].numCrashes, heap[child2Index].numCrashes)){
         largestOrSmallest = child2Index;
     }
 
@@ -46,28 +49,34 @@ to find a way to make a simple recrusive function for heapify
 
 }
 
-Heap::Heap(){
-    
+template<typename Compare>
+Heap<Compare>::Heap(){
+    comparator = less<int>;
 }
 
-bool Heap::empty(){
+template<typename Compare>
+bool Heap<Compare>::empty(){
     return heap.size() == 0;
 }
 
-int Heap::size(){
+template<typename Compare>
+int Heap<Compare>::size(){
     return heap.size();
 }
 
-AttributeData Heap::top(){
+template<typename Compare>
+AttributeData Heap<Compare>::top(){
     return heap[0];
 }
 
-void Heap::push(AttributeData data){
+template<typename Compare>
+void Heap<Compare>::push(AttributeData data){
     heap.push_back(data);
     heapifyUp(heap.size()-1);
 }
 
-void Heap::pop(){
+template<typename Compare>
+void Heap<Compare>::pop(){
     heap[0] = heap.back();
     heap.pop_back();
     heapifyDown(0);
