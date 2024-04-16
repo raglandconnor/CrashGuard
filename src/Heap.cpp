@@ -4,9 +4,26 @@
 
 #include "Heap.h"
 
+template class Heap<less<int>>;
+template class Heap<greater<int>>;
+
 template<typename Compare>
 void Heap<Compare>::heapifyUp(int index){
-    
+
+    //if index is 0, node has no parents, no need to heapify up
+    if(index==0){
+        return;
+    }
+
+    //else it has a parent with formula n-1/2
+    int parent = (index - 1) / 2;
+
+    //compare curr index w parent and swap accordingly, then recursively call heapify on that new parent
+    if(comparator(heap[parent].numCrashes,heap[index].numCrashes)){
+        swap(heap[parent],heap[index]);
+        heapifyUp(parent);
+    }
+
 }
 
 template<typename Compare>
@@ -50,9 +67,9 @@ to find a way to make a simple recrusive function for heapify
 }
 
 template<typename Compare>
-Heap<Compare>::Heap(){
-    comparator = less<int>;
+Heap<Compare>::Heap() : comparator(Compare()){
 }
+
 
 template<typename Compare>
 bool Heap<Compare>::empty(){
