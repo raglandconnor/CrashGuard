@@ -158,3 +158,8 @@ void HashMap::printAll() {
         }
     }
 }
+
+
+void HashMap::getBucketCount() {
+    cout << this->_currentCapacity << endl;
+}
