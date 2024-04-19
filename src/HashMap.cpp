@@ -145,6 +145,16 @@ vector<pair<string, AttributeData>> HashMap::getBottomK(int k) {
     return dataVector;
 }
 
+
+void HashMap::transferToHeap(Heap<less<>> &heap) {
+    for (auto &bucket : hashMap) {
+        for (auto &pair : bucket) {
+            heap.push(pair.second);
+        }
+    }
+}
+
+
 // Debugging functions
 // -------------------
 
