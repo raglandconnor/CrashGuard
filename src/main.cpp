@@ -17,6 +17,81 @@ int main() {
         return 1;
     }
 
+    bool attribute = true;
+    while (attribute) {
+        bool running = true;
+
+        cout << "Choose an attribute: " << endl;
+        cout << "1. County" << endl;
+        cout << "2. City" << endl;
+        cout << "3. State" << endl;
+        string input1;
+        cin >> input1;
+
+        if (input1 == "1") {
+            // county is key
+        } else if (input1 == "2") {
+            // city is key
+        } else if (input1 == "3") {
+            // state is key
+        } else {
+            cout << "Incorrect input" << endl;
+            running = false;
+        }
+
+        while (running) {
+            cout << "Menu: " << endl;
+            cout << "1. Top k" << endl;
+            cout << "2. Bottom k" << endl;
+            cout << "3. Find" << endl;
+            cout << "4. Change attribute" << endl;
+            cout << "5. Exit" << endl;
+
+            string input;
+            cin >> input;
+            if (input == "1") {
+                cout << "Enter a number from 1 to 10." << endl;
+                string k;
+                cin >> k;
+                if (stoi(k)) {
+                    int num = stoi(k);
+                    if (num < 0 or num > 10) {
+                        cout << "Make sure number is between 1 and 10." << endl;
+                    }
+                    // do comparison using num
+                } else {
+                    cout << "Please enter a correct digit" << endl;
+                }
+            } else if (input == "2") {
+                cout << "Enter a number from 1 to 10." << endl;
+                string k;
+                cin >> k;
+                if (stoi(k)) {
+                    int num = stoi(k);
+                    if (num < 0 or num > 10) {
+                        cout << "Make sure number is between 1 and 10." << endl;
+                    }
+                    // do comparison using num
+                } else {
+                    cout << "Please enter a correct digit" << endl;
+                }
+            } else if (input == "3") {
+
+            } else if (input == "4") {
+                running = false;
+            }
+            else if (input == "5") {
+                running = false;
+                attribute = false;
+            }
+            else {
+                cout << "Incorrect input" << endl;
+            }
+        }
+    }
+
+
+
     /*
      * ID [1], severity [3], startTime [4], endTime [5], distance [10], streetName [12], city [13], county [14],
      * state [15], zipcode [16], timezone [18], weatherCondition [29], relativeTime [43]
