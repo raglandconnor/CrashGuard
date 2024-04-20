@@ -146,7 +146,7 @@ vector<pair<string, AttributeData>> HashMap::getBottomK(int k) {
 }
 
 
-void HashMap::transferToHeap(Heap<less<>> &heap) {
+void HashMap::transferToHeap(Heap<less<int>> &heap) {
     for (auto &bucket : hashMap) {
         for (auto &pair : bucket) {
             heap.push(pair.second);
