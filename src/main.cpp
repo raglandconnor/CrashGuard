@@ -128,7 +128,7 @@ int main() {
                 cin >> k;
                 if (stoi(k)) {
                     int num = stoi(k);
-                    if (num < 0 or num > 10) {
+                    if (num < 0 || num > 10) {
                         cout << "Make sure number is between 1 and 10." << endl;
                     }
                     // do comparison using num
@@ -141,7 +141,7 @@ int main() {
                 cin >> k;
                 if (stoi(k)) {
                     int num = stoi(k);
-                    if (num < 0 or num > 10) {
+                    if (num < 0 || num > 10) {
                         cout << "Make sure number is between 1 and 10." << endl;
                     }
                     // do comparison using num
