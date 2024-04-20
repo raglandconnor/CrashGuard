@@ -102,7 +102,7 @@ void HashMap::find(string key) {
         }
     }
 
-    cout << "Not found" << endl;
+    cout << "Not found\n\n";
 }
 
 

@@ -14,20 +14,20 @@ using namespace std;
 
 template<typename Compare = less<int>>
 class Heap {
-    private:
-        vector<AttributeData> heap;
-        Compare comparator;
-        void heapifyUp(int index);
-        void heapifyDown(int index);
-    public:
-        Heap();
-        bool empty();
-        int size();
-        AttributeData top();
-            // i.e, print data.numCrashes;
-            // data.whateverElse
-        void push(AttributeData data);
-        void pop();
+private:
+    vector<AttributeData> heap;
+    Compare comparator;
+    void heapifyUp(int index);
+    void heapifyDown(int index);
+public:
+    Heap();
+    bool empty();
+    int size();
+    AttributeData top();
+    // i.e, print data.numCrashes;
+    // data.whateverElse
+    void push(AttributeData data);
+    void pop();
 };
 
 

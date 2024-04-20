@@ -5,11 +5,12 @@
 #include "DataNode.h"
 #include "HashMap.h"
 #include "Heap.h"
+#include <chrono>
 
 using namespace std;
 
 
-bool parseCSV(basic_ifstream<char> file, int attribute, HashMap &hashmap, Heap<less<>> &heap) {
+bool parseCSV(int attribute, HashMap &hashmap, Heap<less<int>> &heap) {
     /*
      * Attribute: 1 = County, 2 = City, 3 = State
      *
@@ -17,14 +18,29 @@ bool parseCSV(basic_ifstream<char> file, int attribute, HashMap &hashmap, Heap<l
     * state [15], zipcode [16], timezone [18], weatherCondition [29], relativeTime [43]
     */
 
+    // Open file:
+    cout << "Working directory: " << filesystem::current_path() << endl;
+    string pathname = "resources/US_Accidents_March23.csv";
+    ifstream file{pathname};
+
+    if (!file.is_open()) {
+        cout << "File not open" << endl;
+        return false;
+    }
+
     string line;
     getline(file, line);  // Skip first line
-    while (getline(file, line)) {
+
+    int count = 0;
+
+    while (getline(file, line) && count < 500000) {
         DataNode dataObject;
 
         stringstream ss(line);
         int indexCount = 1;
         string dataPoint;
+
+
 
         while (getline(ss, dataPoint, ',')) {
             if (indexCount == 1) {
@@ -45,6 +61,8 @@ bool parseCSV(basic_ifstream<char> file, int attribute, HashMap &hashmap, Heap<l
 //            else if (indexCount == 43) {dataObject.dayNight = dataPoint;}
 
             indexCount++;
+
+            cout << count << endl;
         }
 
         // Insert into hashmap:
@@ -63,97 +81,135 @@ bool parseCSV(basic_ifstream<char> file, int attribute, HashMap &hashmap, Heap<l
 
             return false;
         }
+
+        count++;
     }
 
     // Insert all items from the hashmap into the heap
-//    hashmap.transferToHeap(heap);  // Not working currently. Something wrong with heap template instantiation. Help
+    hashmap.transferToHeap(heap);  // Not working currently. Something wrong with heap template instantiation. Help
 
     return true;  // Items successfully added to data structures
 }
 
 
 int main() {
-    // Open file:
-    cout << "Working directory: " << filesystem::current_path() << endl;
-    string pathname = "resources/US_Accidents_March23.csv";
-    ifstream file{pathname};
-
-    if (!file.is_open()) {
-        cout << "File not open" << endl;
-        return 1;
-    }
-
     // GUI:
     bool attribute = true;
     while (attribute) {
-        bool running = true;
+        HashMap hashmap;
+        Heap<less<int>> heap;
+
+        bool running = false;
 
         cout << "Choose an attribute: " << endl;
         cout << "1. County" << endl;
         cout << "2. City" << endl;
         cout << "3. State" << endl;
-        string input1;
-        cin >> input1;
+        string inputAttribute;
+        cin >> inputAttribute;
 
-        if (input1 == "1") {
-            // county is key:
-            // Initialize Hashmap and heap
-            // Call parseCSV(file, etc...)
-        } else if (input1 == "2") {
-            // city is key
-            // Initialize Hashmap and heap
-            // Call parseCSV(file, etc...)
-        } else if (input1 == "3") {
-            // state is key
-            // Initialize Hashmap and heap
-            // Call parseCSV(file, etc...)
-        } else {
+        string attributeOption;
+
+        if (inputAttribute == "1") {  // County
+            if (parseCSV(1, hashmap, heap)) {  // Successful
+                cout << "Heap and hash map have been initialized\n\n";
+                running = true;
+                attributeOption = "county";
+            }
+        }
+        else if (inputAttribute == "2") {  // City
+            if (parseCSV(2, hashmap, heap)) {  // Successful
+                cout << "Heap and hash map have been initialized\n\n";
+                running = true;
+                attributeOption = "city";
+            }
+        }
+        else if (inputAttribute == "3") {  // State
+            if (parseCSV(3, hashmap, heap)) {  // Successful
+                cout << "Heap and hash map have been initialized\n\n";
+                running = true;
+                attributeOption = "state";
+            }
+        }
+        else {
             cout << "Incorrect input" << endl;
             running = false;
         }
 
         while (running) {
             cout << "Menu: " << endl;
-            cout << "1. Top k" << endl;
-            cout << "2. Bottom k" << endl;
+            cout << "1. Top 5" << endl;
+            cout << "2. Top k" << endl;
             cout << "3. Find" << endl;
             cout << "4. Change attribute" << endl;
             cout << "5. Exit" << endl;
 
-            string input;
-            cin >> input;
-            if (input == "1") {
-                cout << "Enter a number from 1 to 10." << endl;
-                string k;
-                cin >> k;
-                if (stoi(k)) {
-                    int num = stoi(k);
-                    if (num < 0 || num > 10) {
-                        cout << "Make sure number is between 1 and 10." << endl;
-                    }
-                    // do comparison using num
-                } else {
-                    cout << "Please enter a correct digit" << endl;
-                }
-            } else if (input == "2") {
-                cout << "Enter a number from 1 to 10." << endl;
-                string k;
-                cin >> k;
-                if (stoi(k)) {
-                    int num = stoi(k);
-                    if (num < 0 || num > 10) {
-                        cout << "Make sure number is between 1 and 10." << endl;
-                    }
-                    // do comparison using num
-                } else {
-                    cout << "Please enter a correct digit" << endl;
-                }
-            } else if (input == "3") {
+            string inputOption;
+            cin >> inputOption;
+            if (inputOption == "1") {
+                cout << "Top 5 most crashes:" << endl;
 
-            } else if (input == "4") {
-                running = false;
+                // Hashmap
+                auto startHashmap = chrono::high_resolution_clock::now();
+                vector<pair<string, AttributeData>> list = hashmap.getTopK(5);
+                auto stopHashmap = chrono::high_resolution_clock::now();
+                auto durationHashmap = chrono::duration_cast<chrono::nanoseconds>(stopHashmap - startHashmap);
+
+                // Heap
+                auto startHeap = chrono::high_resolution_clock::now();
+                // TODO: Get top 5 from heap and print with ranking
+                auto stopHeap = chrono::high_resolution_clock::now();
+                auto durationHeap = chrono::duration_cast<chrono::nanoseconds>(stopHeap - startHeap);
+
+                cout << "Time for HashMap: " << durationHashmap.count() << " nanoseconds" << endl;
+                cout << "Time for Heap: " << durationHeap.count() << " nanoseconds" << endl;
+
+                cout << "\n";
             }
-            else if (input == "5") {
+            else if (inputOption == "2") {
+                cout << "Enter a number: ";
+                int k;
+                cin >> k;
+                cout << "\nTop " << k << " most crashes:"<< endl;
+
+                if (k > 0) {
+                    // Hashmap
+                    auto startHashmap = chrono::high_resolution_clock::now();
+                    vector<pair<string, AttributeData>> list = hashmap.getTopK(k);
+                    for (auto pair : list) {
+                        cout << pair.first << ": " << pair.second.numCrashes << endl;
+                    }
+                    auto stopHashmap = chrono::high_resolution_clock::now();
+                    auto durationHashmap = chrono::duration_cast<chrono::nanoseconds>(stopHashmap - startHashmap);
+
+                    // Heap
+                    auto startHeap = chrono::high_resolution_clock::now();
+                    // TODO: Get top k from heap and print with ranking
+                    auto stopHeap = chrono::high_resolution_clock::now();
+                    auto durationHeap = chrono::duration_cast<chrono::nanoseconds>(stopHeap - startHeap);
+
+                    cout << "Time for HashMap: " << durationHashmap.count() << " nanoseconds" << endl;
+                    cout << "Time for Heap: " << durationHeap.count() << " nanoseconds" << endl;
+
+                    cout << "\n";
+                }
+
+            }
+            else if (inputOption == "3") {
+                if (inputAttribute == "3") {
+                    cout << "Use a two letter abbreviation" << endl;
+                }
+                cout << "Enter a " << attributeOption << ": ";
+                string attributeInput;
+                cin >> attributeInput;
+
+                hashmap.find(attributeInput);
+            }
+            else if (inputOption == "4") {
+                running = false;
+                cout << "\n";
+            }
+            else if (inputOption == "5") {
                 running = false;
                 attribute = false;
             }
