@@ -28,6 +28,7 @@ class Heap {
             // data.whateverElse
         void push(AttributeData data);
         void pop();
+        void topK(int k);
 };
 
 
