@@ -98,3 +98,19 @@ void Heap<Compare>::pop(){
     heap.pop_back();
     heapifyDown(0);
 }
+
+template<typename Compare>
+void Heap<Compare>::topK(int k){
+    cout << "Top "<< k <<" Most Dangerous Places to Drive:" << endl;
+
+    for(int i = 0; i < k; i++){
+        //grab the most dangerous
+        AttributeData data = top();
+
+        //remove it from heap
+        pop();
+
+        //print the data
+        cout << data.attributeName << ": " << data.numCrashes << " total crashes" << endl;
+    }
+}
