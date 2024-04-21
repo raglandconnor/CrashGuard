@@ -101,8 +101,6 @@ void Heap<Compare>::pop(){
 
 template<typename Compare>
 void Heap<Compare>::topK(int k){
-    cout << "Top "<< k <<" Most Dangerous Places to Drive:" << endl;
-
     for(int i = 0; i < k; i++){
         //grab the most dangerous
         AttributeData data = top();

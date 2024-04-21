@@ -31,9 +31,9 @@ bool parseCSV(int attribute, HashMap &hashmap, Heap<less<int>> &heap) {
     string line;
     getline(file, line);  // Skip first line
 
-    int count = 0;
+    int count = 0;  // Use for percentage count
 
-    while (getline(file, line) && count < 500000) {
+    while (getline(file, line)) {
         DataNode dataObject;
 
         stringstream ss(line);
@@ -152,12 +152,19 @@ int main() {
                 // Hashmap
                 auto startHashmap = chrono::high_resolution_clock::now();
                 vector<pair<string, AttributeData>> list = hashmap.getTopK(5);
+                cout << "Hashmap:\n";
+                for (const auto& pair : list) {
+                    cout << pair.first << ": " << pair.second.numCrashes << " total crashes" << endl;
+                }
+                cout << endl;
                 auto stopHashmap = chrono::high_resolution_clock::now();
                 auto durationHashmap = chrono::duration_cast<chrono::nanoseconds>(stopHashmap - startHashmap);
 
                 // Heap
                 auto startHeap = chrono::high_resolution_clock::now();
-                // TODO: Get top 5 from heap and print with ranking
+                cout << "Heap:\n";
+                heap.topK(5);
+                cout << endl;
                 auto stopHeap = chrono::high_resolution_clock::now();
                 auto durationHeap = chrono::duration_cast<chrono::nanoseconds>(stopHeap - startHeap);
 
@@ -176,15 +183,19 @@ int main() {
                     // Hashmap
                     auto startHashmap = chrono::high_resolution_clock::now();
                     vector<pair<string, AttributeData>> list = hashmap.getTopK(k);
-                    for (auto pair : list) {
-                        cout << pair.first << ": " << pair.second.numCrashes << endl;
+                    cout << "Hashmap:\n";
+                    for (const auto& pair : list) {
+                        cout << pair.first << ": " << pair.second.numCrashes << " total crashes" << endl;
                     }
+                    cout << endl;
                     auto stopHashmap = chrono::high_resolution_clock::now();
                     auto durationHashmap = chrono::duration_cast<chrono::nanoseconds>(stopHashmap - startHashmap);
 
                     // Heap
                     auto startHeap = chrono::high_resolution_clock::now();
-                    // TODO: Get top k from heap and print with ranking
+                    cout << "Heap:\n";
+                    heap.topK(k);
+                    cout << endl;
                     auto stopHeap = chrono::high_resolution_clock::now();
                     auto durationHeap = chrono::duration_cast<chrono::nanoseconds>(stopHeap - startHeap);
 
@@ -218,9 +229,6 @@ int main() {
             }
         }
     }
-
-
-
 
     return 0;
 }
