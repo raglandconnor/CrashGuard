@@ -102,7 +102,7 @@ void HashMap::find(string key) {
         }
     }
 
-    cout << "Not found" << endl;
+    cout << "Not found\n\n";
 }
 
 
@@ -144,6 +144,16 @@ vector<pair<string, AttributeData>> HashMap::getBottomK(int k) {
 
     return dataVector;
 }
+
+
+void HashMap::transferToHeap(Heap<less<int>> &heap) {
+    for (auto &bucket : hashMap) {
+        for (auto &pair : bucket) {
+            heap.push(pair.second);
+        }
+    }
+}
+
 
 // Debugging functions
 // -------------------

@@ -10,6 +10,7 @@
 #include "DataNode.h"
 #include "AttributeData.h"
 #include <algorithm>
+#include "Heap.h"
 
 using namespace std;
 
@@ -36,6 +37,8 @@ public:
 
     vector<pair<string, AttributeData>> getTopK(int k);  // Gets top k values
     vector<pair<string, AttributeData>> getBottomK(int k);  // Gets k lowest values
+
+    void transferToHeap(Heap<less<int>> &heap);  // Transfers items from hashmap to heap
 
     // For debugging (temporary):
     void printAll();

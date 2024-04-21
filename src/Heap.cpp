@@ -30,17 +30,17 @@ template<typename Compare>
 void Heap<Compare>::heapifyDown(int index){
 
     //the current parent index to compare with the children 
-	int largestOrSmallest = index;
+    int largestOrSmallest = index;
 
-	//the indices of the children of p are 2p+1 and 2p+2
-	int child1Index = index*2 + 1;
-	int child2Index = index*2 + 2;
+    //the indices of the children of p are 2p+1 and 2p+2
+    int child1Index = index*2 + 1;
+    int child2Index = index*2 + 2;
 
 
 
-	//check if index is valid, if it is, check if more crashes occur at the child or parent
+    //check if index is valid, if it is, check if more crashes occur at the child or parent
     //user can use comparator to choose min or max heap.
-	if(child1Index < heap.size() && comparator(heap[largestOrSmallest].numCrashes, heap[child1Index].numCrashes)){
+    if(child1Index < heap.size() && comparator(heap[largestOrSmallest].numCrashes, heap[child1Index].numCrashes)){
         largestOrSmallest = child1Index;
     }
 
