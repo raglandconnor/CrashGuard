@@ -12,7 +12,7 @@ using namespace std;
 
 bool parseCSV(int attribute, HashMap &hashmap, Heap<less<int>> &heap) {
     /*
-     * Attribute: 1 = County, 2 = City, 3 = State
+     * Attribute: 0 = Street name, 1 = County, 2 = City, 3 = State
      *
     * ID [1], severity [3], startTime [4], endTime [5], distance [10], streetName [12], city [13], county [14],
     * state [15], zipcode [16], timezone [18], weatherCondition [29], relativeTime [43]
@@ -35,7 +35,7 @@ bool parseCSV(int attribute, HashMap &hashmap, Heap<less<int>> &heap) {
 
     float previous_percentage = 0;
 
-    while (getline(file, line)) {
+    while (getline(file, line)) {  // Line of csv
         DataNode dataObject;
 
         stringstream ss(line);
@@ -44,7 +44,7 @@ bool parseCSV(int attribute, HashMap &hashmap, Heap<less<int>> &heap) {
 
 
 
-        while (getline(ss, dataPoint, ',')) {
+        while (getline(ss, dataPoint, ',')) {  // Each delim. of csv
             if (indexCount == 1) {
                 dataPoint = dataPoint.substr(2, dataPoint.size()-2);
                 dataObject.ID = stoi(dataPoint);
@@ -69,7 +69,10 @@ bool parseCSV(int attribute, HashMap &hashmap, Heap<less<int>> &heap) {
         }
 
         // Insert into hashmap:
-        if (attribute == 1) {  // County
+        if(attribute == 0) {  // Street name
+            hashmap.insert(dataObject.streetName, dataObject);
+        }
+        else if (attribute == 1) {  // County
             hashmap.insert(dataObject.county, dataObject);
         }
         else if (attribute == 2) {  // City
@@ -117,30 +120,41 @@ int main() {
         bool running = false;
 
         cout << "Choose an attribute: " << endl;
-        cout << "1. County" << endl;
-        cout << "2. City" << endl;
-        cout << "3. State" << endl;
+        cout << "1. Street Name" << endl;
+        cout << "2. County" << endl;
+        cout << "3. City" << endl;
+        cout << "4. State" << endl;
         string inputAttribute;
         cin >> inputAttribute;
 
         string attributeOption;
-
-        if (inputAttribute == "1") {  // County
+        if (inputAttribute == "1") {
+            if (parseCSV(0, hashmap, heap)) {  // Successful
+                cout << "Loading: 100.00%" << endl;
+                cout << "Heap and hash map have been initialized\n\n";
+                running = true;
+                attributeOption = "street name";
+            }
+        }
+        else if (inputAttribute == "2") {  // County
             if (parseCSV(1, hashmap, heap)) {  // Successful
+                cout << "Loading: 100.00%" << endl;
                 cout << "Heap and hash map have been initialized\n\n";
                 running = true;
                 attributeOption = "county";
             }
         }
-        else if (inputAttribute == "2") {  // City
+        else if (inputAttribute == "3") {  // City
             if (parseCSV(2, hashmap, heap)) {  // Successful
+                cout << "Loading: 100.00%" << endl;
                 cout << "Heap and hash map have been initialized\n\n";
                 running = true;
                 attributeOption = "city";
             }
         }
-        else if (inputAttribute == "3") {  // State
+        else if (inputAttribute == "4") {  // State
             if (parseCSV(3, hashmap, heap)) {  // Successful
+                cout << "Loading: 100.00%" << endl;
                 cout << "Heap and hash map have been initialized\n\n";
                 running = true;
                 attributeOption = "state";
@@ -184,7 +198,9 @@ int main() {
                 auto durationHeap = chrono::duration_cast<chrono::nanoseconds>(stopHeap - startHeap);
 
                 cout << "Time for HashMap: " << durationHashmap.count() << " nanoseconds" << endl;
-                cout << "Time for Heap: " << durationHeap.count() << " nanoseconds" << endl;
+                cout << "Time for Heap: " << durationHeap.count() << " nanoseconds\n" << endl;
+
+                cout << "The heap was " << std::setprecision(2) << (double)durationHashmap.count() / (double)durationHeap.count() << "x faster than the hashmap" << endl;
 
                 cout << "\n";
             }
@@ -192,7 +208,7 @@ int main() {
                 cout << "Enter a number: ";
                 int k;
                 cin >> k;
-                if (inputAttribute == "3") {
+                if (inputAttribute == "4") {
                     if (k > 50) {
                         cout << "Enter a number between 1 and 50" << endl;
                         continue;
@@ -221,19 +237,22 @@ int main() {
                     auto durationHeap = chrono::duration_cast<chrono::nanoseconds>(stopHeap - startHeap);
 
                     cout << "Time for HashMap: " << durationHashmap.count() << " nanoseconds" << endl;
-                    cout << "Time for Heap: " << durationHeap.count() << " nanoseconds" << endl;
+                    cout << "Time for Heap: " << durationHeap.count() << " nanoseconds\n" << endl;
+
+                    cout << "The heap was " << std::setprecision(2) << (double)durationHashmap.count() / (double)durationHeap.count() << "x faster than the hashmap" << endl;
 
                     cout << "\n";
                 }
 
             }
             else if (inputOption == "3") {
-                if (inputAttribute == "3") {
+                if (inputAttribute == "4") {
                     cout << "Use a two letter abbreviation" << endl;
                 }
                 cout << "Enter a " << attributeOption << ": ";
                 string attributeInput;
-                cin >> attributeInput;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // This will allow strings with spaces
+                getline(cin, attributeInput);
 
                 hashmap.find(attributeInput);
             }
@@ -248,6 +267,11 @@ int main() {
             else {
                 cout << "Incorrect input" << endl;
             }
+
+            // Create new heap and replace old
+            Heap<less<int>> newHeap;
+            hashmap.transferToHeap(newHeap);
+            heap = newHeap;
         }
     }
 
