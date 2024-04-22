@@ -112,6 +112,7 @@ bool parseCSV(int attribute, HashMap &hashmap, Heap<less<int>> &heap) {
 
 int main() {
     // GUI:
+    cout << "----------- CrashGuard: Ensuring Safe Travels -----------" << endl << endl;
     bool attribute = true;
     while (attribute) {
         HashMap hashmap;
