@@ -49,6 +49,7 @@ HashMap::HashMap() {
     _maxCapacity = INITIAL_CAPACITY;
     _currentCapacity = 0;
     _loadFactor = 0;
+    _maxCrashes = 0;
 }
 
 
@@ -64,6 +65,7 @@ void HashMap::insert(string key, const DataNode& dataObject) {
                 int numCrashes = item.second.numCrashes;
                 int totalSeverity = item.second.totalSeverity;
                 item.second.averageSeverity = (double)totalSeverity / (double)numCrashes;
+                item.second.numCrashes > _maxCrashes ? _maxCrashes = item.second.numCrashes : _maxCrashes;
 
                 return;
             }
@@ -107,19 +109,24 @@ void HashMap::find(string key) {
 
 
 vector<pair<string, AttributeData>> HashMap::getTopK(int k) {
-    vector<pair<string, AttributeData>> dataVector;
+    vector<vector<pair<string, AttributeData>>> buckets(_maxCrashes+1);
     for (auto &bucket : hashMap) {
-        dataVector.insert(dataVector.end(), bucket.begin(), bucket.end());
+        for (auto &pair : bucket) {
+            buckets.at(pair.second.numCrashes).push_back(pair);
+        }
     }
 
-    // Sort using std::sort and a lambda function for comparing.
-    // Reference: https://stackoverflow.com/questions/5122804/how-to-sort-with-a-lambda
-    sort(dataVector.begin(), dataVector.end(), [](const pair<string, AttributeData> &a, const pair<string, AttributeData> &b) {
-        return a.second.numCrashes > b.second.numCrashes;
-    });
+    vector<pair<string, AttributeData>> dataVector;
 
-    if (dataVector.size() > k) {
-        dataVector.resize(k);  // Only keep top k elements.
+    int i = _maxCrashes;
+    while (dataVector.size() < k && i >= 0) {
+        for (auto &pair : buckets.at(i)) {
+            dataVector.push_back(pair);
+            if (dataVector.size() >= k) {
+                break;
+            }
+        }
+        i--;
     }
 
     return dataVector;
