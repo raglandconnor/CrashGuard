@@ -182,8 +182,10 @@ int main() {
                 auto startHashmap = chrono::high_resolution_clock::now();
                 vector<pair<string, AttributeData>> list = hashmap.getTopK(5);
                 cout << "Hashmap:\n";
+                int count = 1;
                 for (const auto& pair : list) {
-                    cout << pair.first << ": " << pair.second.numCrashes << " total crashes" << endl;
+                    cout << count << ". " << pair.first << ": " << pair.second.numCrashes << " total crashes" << endl;
+                    count++;
                 }
                 cout << endl;
                 auto stopHashmap = chrono::high_resolution_clock::now();
@@ -221,8 +223,10 @@ int main() {
                     auto startHashmap = chrono::high_resolution_clock::now();
                     vector<pair<string, AttributeData>> list = hashmap.getTopK(k);
                     cout << "Hashmap:\n";
+                    int count = 1;
                     for (const auto& pair : list) {
-                        cout << pair.first << ": " << pair.second.numCrashes << " total crashes" << endl;
+                        cout << count << ". " << pair.first << ": " << pair.second.numCrashes << " total crashes" << endl;
+                        count++;
                     }
                     cout << endl;
                     auto stopHashmap = chrono::high_resolution_clock::now();
