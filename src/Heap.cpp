@@ -109,6 +109,6 @@ void Heap<Compare>::topK(int k){
         pop();
 
         //print the data
-        cout << data.attributeName << ": " << data.numCrashes << " total crashes" << endl;
+        cout << i+1 << ". " << data.attributeName << ": " << data.numCrashes << " total crashes" << endl;
     }
 }
