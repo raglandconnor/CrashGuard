@@ -23,6 +23,7 @@ private:
     float _loadFactor;  // (currentCapacity / maxCapacity)
     int _maxCapacity;
     int _currentCapacity;
+    int _maxCrashes;
 
     vector<vector<pair<string, AttributeData>>> hashMap;  // Stores <key, AttributeData>
 
