@@ -33,6 +33,8 @@ bool parseCSV(int attribute, HashMap &hashmap, Heap<less<int>> &heap) {
 
     int count = 0;  // Use for percentage count
 
+    float previous_percentage = 0;
+
     while (getline(file, line)) {
         DataNode dataObject;
 
@@ -62,7 +64,8 @@ bool parseCSV(int attribute, HashMap &hashmap, Heap<less<int>> &heap) {
 
             indexCount++;
 
-            cout << count << endl;
+
+
         }
 
         // Insert into hashmap:
@@ -81,6 +84,18 @@ bool parseCSV(int attribute, HashMap &hashmap, Heap<less<int>> &heap) {
 
             return false;
         }
+
+        float percentage = count / 77000;
+
+        if (count % 100000 == 0) {
+            if (percentage == previous_percentage) {
+                cout << fixed << showpoint;
+                cout << setprecision(2);
+                cout << "Loading: " << percentage << "%"  << endl;
+            }
+        }
+
+        previous_percentage = percentage;
 
         count++;
     }
@@ -177,6 +192,12 @@ int main() {
                 cout << "Enter a number: ";
                 int k;
                 cin >> k;
+                if (inputAttribute == "3") {
+                    if (k > 50) {
+                        cout << "Enter a number between 1 and 50" << endl;
+                        continue;
+                    }
+                }
                 cout << "\nTop " << k << " most crashes:"<< endl;
 
                 if (k > 0) {
