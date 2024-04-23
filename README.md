@@ -3,6 +3,8 @@ Our project explores the performance of hashmaps and heaps by comparing how effe
 - Language: C++ 20
 - Compiler: GCC 13.2
 
+Group Report: [link](https://drive.google.com/file/d/1D6bEjlnPTLO0aULwlZJOSo67gKgW0Rw_/view?usp=sharing)
+
 ## Project Directory:
 - `resources`
   - `US_Accidents_March23.csv`: contains the dataset from [Kaggle](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents?resource=download)
