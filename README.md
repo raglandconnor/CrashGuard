@@ -15,10 +15,10 @@ Our project explores the performance of hashmaps and heaps by comparing how effe
   - `AttributeData.h`: contains a struct that is used by both data structures
   - `DataNode.h`: contains a struct that is used to contain a single crash and all its data when parsing
   - `HashMap.cpp`
-  - `HashMap.h`
+  - `HashMap.h` : a hashmap template class implemented from scratch with hashing and separate-chaining collision resolution
   - `Heap.cpp`
-  - `Heap.h`
-  - `main.cpp`
+  - `Heap.h`: a heap template class implemented from scratch using comparators and function pointers
+  - `main.cpp`: menu-driven program allowing users to learn about US accidents and compares data structures
 
 ## Instructions for Running:
 
@@ -44,6 +44,6 @@ g++ -std=c++17 -c src/main.cpp -o main.o && g++ -std=c++17 -c src/HashMap.cpp -o
 
 
 #### References:
-[US Accidents (2016 - 2023) Dataset](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents?resource=download)
-- Moosavi, Sobhan, Mohammad Hossein Samavatian, Srinivasan Parthasarathy, and Rajiv Ramnath. “A Countrywide Traffic Accident Dataset.”, 2019.
-- Moosavi, Sobhan, Mohammad Hossein Samavatian, Srinivasan Parthasarathy, Radu Teodorescu, and Rajiv Ramnath. "Accident Risk Prediction based on Heterogeneous Sparse Data: New Dataset and Insights." In proceedings of the 27th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems, ACM, 2019.
+- [US Accidents (2016 - 2023) Dataset](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents?resource=download)
+  - Moosavi, Sobhan, Mohammad Hossein Samavatian, Srinivasan Parthasarathy, and Rajiv Ramnath. “A Countrywide Traffic Accident Dataset.”, 2019.
+  - Moosavi, Sobhan, Mohammad Hossein Samavatian, Srinivasan Parthasarathy, Radu Teodorescu, and Rajiv Ramnath. "Accident Risk Prediction based on Heterogeneous Sparse Data: New Dataset and Insights." In proceedings of the 27th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems, ACM, 2019.
