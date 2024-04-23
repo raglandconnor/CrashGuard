@@ -1,9 +1,12 @@
 # COP3530 Project 3 - CrashGuard
-Our project explores the performance of hashmaps and heaps by comparing how effectively each data structure can retrieve the top k elements. 
+Our project explores the performance of hashmaps and heaps by comparing how effectively each data structure can retrieve the top k elements.
 - Language: C++ 20
 - Compiler: GCC 13.2
 
-Group Report: [link](https://drive.google.com/file/d/1D6bEjlnPTLO0aULwlZJOSo67gKgW0Rw_/view?usp=sharing)
+## Group Documentation and Video:
+[Project Report](https://drive.google.com/file/d/1D6bEjlnPTLO0aULwlZJOSo67gKgW0Rw_/view?usp=sharing)
+
+[Overview - YouTube](https://youtu.be/E8t5Uz8HIlE?feature=shared)
 
 ## Project Directory:
 - `resources`
