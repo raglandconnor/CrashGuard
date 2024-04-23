@@ -133,26 +133,6 @@ vector<pair<string, AttributeData>> HashMap::getTopK(int k) {
 }
 
 
-vector<pair<string, AttributeData>> HashMap::getBottomK(int k) {
-    vector<pair<string, AttributeData>> dataVector;
-    for (auto &bucket : hashMap) {
-        dataVector.insert(dataVector.end(), bucket.begin(), bucket.end());
-    }
-
-    // Sort using std::sort and a lambda function for comparing.
-    // Reference: https://stackoverflow.com/questions/5122804/how-to-sort-with-a-lambda
-    sort(dataVector.begin(), dataVector.end(), [](const pair<string, AttributeData> &a, const pair<string, AttributeData> &b) {
-        return a.second.numCrashes < b.second.numCrashes;
-    });
-
-    if (dataVector.size() > k) {
-        dataVector.resize(k);  // Only keep top k elements.
-    }
-
-    return dataVector;
-}
-
-
 void HashMap::transferToHeap(Heap<less<int>> &heap) {
     for (auto &bucket : hashMap) {
         for (auto &pair : bucket) {
@@ -164,19 +144,19 @@ void HashMap::transferToHeap(Heap<less<int>> &heap) {
 
 // Debugging functions
 // -------------------
-
-void HashMap::printAll() {
-    for (auto row : hashMap) {
-        for (auto col : row) {
-            cout << col.first << ": " << endl;
-            cout << "Num crashes: " << col.second.numCrashes << endl;
-            cout << "Average severity: " << col.second.averageSeverity << endl;
-            cout << endl;
-        }
-    }
-}
-
-
-void HashMap::getBucketCount() {
-    cout << this->_currentCapacity << endl;
-}
+//
+//void HashMap::printAll() {
+//    for (auto row : hashMap) {
+//        for (auto col : row) {
+//            cout << col.first << ": " << endl;
+//            cout << "Num crashes: " << col.second.numCrashes << endl;
+//            cout << "Average severity: " << col.second.averageSeverity << endl;
+//            cout << endl;
+//        }
+//    }
+//}
+//
+//
+//void HashMap::getBucketCount() {
+//    cout << this->_currentCapacity << endl;
+//}

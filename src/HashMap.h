@@ -37,13 +37,12 @@ public:
     void find(string key);  // May change to accommodate specific uses
 
     vector<pair<string, AttributeData>> getTopK(int k);  // Gets top k values
-    vector<pair<string, AttributeData>> getBottomK(int k);  // Gets k lowest values
 
     void transferToHeap(Heap<less<int>> &heap);  // Transfers items from hashmap to heap
 
     // For debugging (temporary):
-    void printAll();
-    void getBucketCount();
+//    void printAll();
+//    void getBucketCount();
 };
 
 
